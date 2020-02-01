@@ -1,3 +1,3 @@
-module RLE
-  VERSION = "0.999"
+module Rle
+  VERSION = "0.999".freeze
 end

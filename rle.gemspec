@@ -4,7 +4,7 @@ require "rle/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "rle"
-  spec.version       = RLE::VERSION
+  spec.version       = Rle::VERSION
   spec.licenses      = ["LGPL-3.0+"]
   spec.authors       = ["Marco Merli"]
   spec.email         = ["yohji@marcomerli.net"]
@@ -29,7 +29,4 @@ Gem::Specification.new do |spec|
   end
   spec.require_paths = ["lib"]
 
-  spec.add_development_dependency "bundler", "~> 1.16"
-  spec.add_development_dependency "rake", "~> 10.0"
-  spec.add_development_dependency "rspec", "~> 3.0"
 end

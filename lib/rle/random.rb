@@ -17,66 +17,7 @@
 #   or see <http://www.gnu.org/licenses/>
 #
 
-class Integer
-
-	def to_h
-		return self.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse
-	end
-
-	def degrees
-		self * (180 / Math::PI)
-	end
-
-	def radians
-		self * (Math::PI / 180)
-	end
-
-	def alphabet
-
-		index = String.new
-		dividend = self
-		modulo = 0
-
-		while dividend > 0
-			modulo = (dividend - 1) % 26
-			index = (65 + modulo).chr + index
-			dividend = (dividend - modulo) / 26
-		end
-
-		return index
-	end
-end
-
-class Float
-
-	def to_r
-
-		return "0" if self == 0
-
-		n = 0.0
-		while n < 1e4
-			n += 1
-			d = 0.0
-
-			begin
-				d += 1
-				return "#{n.to_i}/#{d.to_i}" if (n / d) == self
-			end until ((n / d) < self)
-		end
-
-		return "?/?"
-	end
-
-	def round_next(nearest)
-
-		return (self.round / nearest) * nearest;
-	end
-
-	def degrees
-		self * (180 / Math::PI)
-	end
-
-	def radians
-		self * (Math::PI / 180)
-	end
+def rand_alphanum(number)
+	charset = Array('A'..'Z') + Array('a'..'z') + Array(0..9)
+	Array.new(number) { charset.sample }.join
 end
