@@ -17,12 +17,23 @@
 #   or see <http://www.gnu.org/licenses/>
 #
 
-def rand_hex size
+def rand_hex length
 	require 'securerandom'
-	SecureRandom.hex (size / 2)
+	SecureRandom.hex (length / 2)
 end
 
-def rand_alphabet size
-	charset = Array('A'..'Z') + Array('a'..'z')
-	Array.new(size) { charset.sample }.join
+def rand_pwd length
+	charset = Array('A'..'Z') + Array('a'..'~') + Array('!'..'*') + Array('?'..'~')
+	charset.delete "\""; charset.delete "\\";
+	Array.new(length) { charset.sample }.join
+end
+
+def rand_pat length, size = 4
+	pat = String.new
+	length.times do |l|
+		size.times do |s|
+			pat << (65 + (l % 26)).chr
+		end
+	end
+	return pat
 end
