@@ -17,7 +17,12 @@
 #   or see <http://www.gnu.org/licenses/>
 #
 
-def rand_alphanum(number)
-	charset = Array('A'..'Z') + Array('a'..'z') + Array(0..9)
-	Array.new(number) { charset.sample }.join
+def rand_hex size
+	require 'securerandom'
+	SecureRandom.hex (size / 2)
+end
+
+def rand_alphabet size
+	charset = Array('A'..'Z') + Array('a'..'z')
+	Array.new(size) { charset.sample }.join
 end

@@ -19,15 +19,15 @@
 
 module Interface
 
-    def method(name)
-        define_method(name) { |*args| raise "interface method #{name} not implemented"}
-    end
+	def method(name)
+		define_method(name) { |*args| raise "interface method #{name} not implemented"}
+	end
 end
 
 module Collection extend Interface
 
-    method :add
-    method :remove
-    method :length
-    method :empty?
+	method :add
+	method :remove
+	method :length
+	method :empty?
 end

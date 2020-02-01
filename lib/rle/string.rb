@@ -19,7 +19,7 @@
 
 class String
 
-	def is_numeric
+	def numeric?
 		return self =~ /-?\d+([\.,]\d+)?/
 	end
 end

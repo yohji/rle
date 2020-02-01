@@ -17,11 +17,14 @@
 #   or see <http://www.gnu.org/licenses/>
 #
 
-def fatt n
-    return 1 if n == 0
-    return n * fatt(n - 1)
-end
+module Math
 
-def map(x, in_min, in_max, out_min, out_max)
-    return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min
+	def Math.fatt n
+		return 1 if n == 0
+		return n * fatt(n - 1)
+	end
+
+	def Math.map(x, in_min, in_max, out_min, out_max)
+		return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min
+	end
 end

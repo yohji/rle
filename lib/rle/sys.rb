@@ -17,6 +17,6 @@
 #   or see <http://www.gnu.org/licenses/>
 #
 
-def memory_used
-  File.read("/proc/#$$/status").match(/^VmSize:\s*(\d*)/)[1].to_i
+def mem_usage
+	File.read("/proc/#$$/status").match(/^VmSize:\s*(\d*)/)[1].to_i
 end

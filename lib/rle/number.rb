@@ -50,7 +50,6 @@ end
 class Float
 
 	def to_r
-
 		return "0" if self == 0
 
 		n = 0.0
@@ -68,7 +67,6 @@ class Float
 	end
 
 	def round_next(nearest)
-
 		return (self.round / nearest) * nearest;
 	end
 

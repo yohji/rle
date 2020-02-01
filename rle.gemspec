@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["yohji@marcomerli.net"]
 
   spec.summary       = %q{Ruby Language Extensions.}
-  spec.description   = %q{Ruby Language Extensions.}
+  spec.description   = %q{'rle' is a set of extensions of core classes of Ruby.}
   spec.homepage      = "https://github.com/yohji/rle"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
