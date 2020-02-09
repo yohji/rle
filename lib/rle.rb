@@ -17,12 +17,15 @@
 #   or see <http://www.gnu.org/licenses/>
 #
 
-require "rle/array"
-require "rle/geo"
-require "rle/math"
-require "rle/number"
-require "rle/random"
-require "rle/string"
-require "rle/sys"
-require "rle/type"
-require "rle/version"
+module Rle
+	require "rle/cipher"
+	require "rle/coll"
+	require "rle/geo"
+	require "rle/math"
+	require "rle/number"
+	require "rle/random"
+	require "rle/string"
+	require "rle/sys"
+	require "rle/type"
+	require "rle/version"
+end

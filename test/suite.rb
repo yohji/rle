@@ -19,3 +19,4 @@
 #
 
 load "test/cipher-test.rb"
+load "test/coll-test.rb"

@@ -23,6 +23,18 @@ class Integer
 		return self.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse
 	end
 
+	def to_bin
+		data = Array.new
+
+		i = (self.to_s(2).length / 32.0).round - 1
+		while i >= 0
+			data.push (self >> (i * 32)) & 0xFFFFFFFF
+			i -= 1
+		end
+
+		return data.pack "N*"
+	end
+
 	def degrees
 		self * (180 / Math::PI)
 	end
