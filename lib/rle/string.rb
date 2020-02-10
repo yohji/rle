@@ -19,7 +19,20 @@
 
 class String
 
+	alias :len :length
+
 	def numeric?
 		return self =~ /-?\d+([\.,]\d+)?/
+	end
+
+	def to_b
+		r = 0
+
+		self.each_byte do |b|
+			r <<= 8 if r != 0
+			r |= b
+		end
+
+		return r
 	end
 end

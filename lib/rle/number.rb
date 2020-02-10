@@ -19,20 +19,22 @@
 
 class Integer
 
+	alias :len :bit_length
+
 	def to_h
 		return self.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse
 	end
 
-	def to_bin
+	def to_b
 		data = Array.new
 
-		i = (self.to_s(2).length / 32.0).round - 1
+		i = (self.bit_length / 8.0).ceil - 1
 		while i >= 0
-			data.push (self >> (i * 32)) & 0xFFFFFFFF
+			data.push (self >> (i * 8)) & 0xFF
 			i -= 1
 		end
 
-		return data.pack "N*"
+		return data.pack "C*"
 	end
 
 	def degrees
