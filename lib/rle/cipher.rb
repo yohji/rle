@@ -22,7 +22,7 @@ module Cipher
 	CHAR_UPCASE = 65
 	CHAR_DOWNCASE = 97
 
-	def Cipher.caesar_crypt(msg, shift)
+	def Cipher.rot_enc(msg, shift = 13)
 
 		res = String.new
 		msg.each_char do |ch|
@@ -40,7 +40,7 @@ module Cipher
 		return res
 	end
 
-	def Cipher.caesar_decrypt(msg, shift)
+	def Cipher.rot_dec(msg, shift = 13)
 
 		res = String.new
 		msg.each_char do |ch|
@@ -58,7 +58,7 @@ module Cipher
 		return res
 	end
 
-	def Cipher.xor_crypt(msg, key)
+	def Cipher.xor_enc(msg, key)
 
 		res = String.new
 		bytes = msg.unpack("S*")
@@ -72,7 +72,7 @@ module Cipher
 		return res
 	end
 
-	def Cipher.xor_decrypt(msg, key)
+	def Cipher.xor_dec(msg, key)
 
 		res = String.new
 		bytes = msg.unpack("S*")

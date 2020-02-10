@@ -24,11 +24,11 @@ TEXT="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 
 class CipherTest < Test::Unit::TestCase
 
-	def test_caesar
+	def test_rot
 		(1 .. 26).each do |shift|
 
-			secret = Cipher.caesar_crypt(TEXT, shift)
-			plain = Cipher.caesar_decrypt(secret, shift)
+			secret = Cipher.rot_enc(TEXT, shift)
+			plain = Cipher.rot_dec(secret, shift)
 
 			assert_equal(TEXT, plain)
 		end
@@ -37,8 +37,8 @@ class CipherTest < Test::Unit::TestCase
 	def test_xor
 		(1 .. 9999).each do |key|
 
-			secret = Cipher.xor_crypt(TEXT, key)
-			plain = Cipher.xor_decrypt(secret, key)
+			secret = Cipher.xor_enc(TEXT, key)
+			plain = Cipher.xor_dec(secret, key)
 
 			assert_equal(TEXT.size, plain.size)
 			assert_equal(TEXT, plain, "key: #{key}")
