@@ -59,6 +59,18 @@ class Integer
 
 		return index
 	end
+
+	def ror(bits, shift)
+		raise "Number overflows #{bits} bits." if self > ((1 << bits) - 1)
+		mask = (1 << (bits - shift)) - 1
+		(self >> shift) | ((self & mask) << (bits - shift)) & ((1 << bits) - 1)
+	end
+
+	def rol(bits, shift)
+		raise "Number overflows #{bits} bits." if self > ((1 << bits) - 1)
+		mask = (1 << (bits - shift)) - 1
+		((self & mask) << shift) | (self >> (bits - shift))
+	end
 end
 
 class Float
