@@ -17,16 +17,17 @@
 #   or see <http://www.gnu.org/licenses/>
 #
 
-module Rle
-	require "rle/cipher"
-	require "rle/coll"
-	require "rle/geo"
-	require "rle/hash"
-	require "rle/math"
-	require "rle/number"
-	require "rle/random"
-	require "rle/string"
-	require "rle/sys"
-	require "rle/type"
-	require "rle/version"
+require "test/unit"
+load "lib/rle/hash.rb"
+
+class Murmur3Test < Test::Unit::TestCase
+
+	def test_hash32
+		assert_equal(0x087fcd5c, Murmur3.hash32(""))
+		assert_equal(0x8ee776ee, Murmur3.hash32("Z"))
+		assert_equal(0x890ca77b, Murmur3.hash32("!?"))
+		assert_equal(0xe8daf3dd, Murmur3.hash32("[|]"))
+		assert_equal(0x1b12f10d, Murmur3.hash32("ABCD"))
+		assert_equal(0x8430f6fe, Murmur3.hash32("yohji"))
+	end
 end

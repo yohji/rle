@@ -20,3 +20,4 @@
 
 load "test/cipher-test.rb"
 load "test/coll-test.rb"
+load "test/hash-test.rb"
