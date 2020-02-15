@@ -18,15 +18,19 @@
 #
 
 module Rle
-	require "rle/cipher"
 	require "rle/coll"
-	require "rle/geo"
-	require "rle/hash"
 	require "rle/math"
 	require "rle/number"
 	require "rle/random"
 	require "rle/string"
 	require "rle/sys"
-	require "rle/type"
 	require "rle/version"
+
+	def Rle.load_extra
+		require "rle/cipher"
+		require "rle/geo"
+		require "rle/hash"
+		require "rle/net"
+		require "rle/type"
+	end
 end

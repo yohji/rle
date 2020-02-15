@@ -23,11 +23,3 @@ module Interface
 		define_method(name) { |*args| raise "interface method #{name} not implemented"}
 	end
 end
-
-module Collection extend Interface
-
-	method :add
-	method :remove
-	method :length
-	method :empty?
-end

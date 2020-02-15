@@ -17,6 +17,9 @@
 #   or see <http://www.gnu.org/licenses/>
 #
 
-def mem_usage
-	File.read("/proc/#$$/status").match(/^VmSize:\s*(\d*)/)[1].to_i
+module Kernel
+
+	def Kernel.mem
+		File.read("/proc/#$$/status").match(/^VmSize:\s*(\d*)/)[1].to_i
+	end
 end

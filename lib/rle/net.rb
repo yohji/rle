@@ -17,15 +17,29 @@
 #   or see <http://www.gnu.org/licenses/>
 #
 
-module Geo
+require 'net/http'
 
-	def bearing(from, to)
+module Web
 
-		d = to.lonr - from.lonr
-		y = Math.sin(d) * Math.cos(to.latr)
-		x = Math.cos(from.latr) * Math.sin(to.latr) \
-			- Math.sin(from.latr) * Math.cos(to.latr) * Math.cos(d)
+	def Web.http_get url
+		uri = URI(url)
 
-		return ((Math.atan2(y, x) * (180 / Math::PI)) + 360) % 360
+		res = Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http|
+			req = Net::HTTP::Get.new(uri)
+			yield req if block_given?
+			http.request(req)
+		end
+		return res
+	end
+
+	def Web.http_post url
+		uri = URI(url)
+
+		res = Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http|
+			req = Net::HTTP::Post.new(uri)
+			yield req if block_given?
+			http.request(req)
+		end
+		return res
 	end
 end

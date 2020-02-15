@@ -17,12 +17,12 @@
 #   or see <http://www.gnu.org/licenses/>
 #
 
-##
-# MurmurHash3 was written by Austin Appleby, and is placed in the public
-# domain. The author hereby disclaims copyright to this source code.
-module Murmur3
+module Hashcode
 
-	def Murmur3.hash32(data, seed = 42)
+	##
+	# MurmurHash3 was written by Austin Appleby, and is placed in the public
+	# domain. The author hereby disclaims copyright to this source code.
+	def Hashcode.murmur3_32(data, seed = 42)
 
 		len = data.length
 		hash = add32(seed, 0)
@@ -86,24 +86,24 @@ module Murmur3
 	R1 = 15
 	R2 = 13
 
-	def Murmur3.add32(m, n)
+	def Hashcode.add32(m, n)
 		return (m + n) & MASK_32
 	end
 
-	def Murmur3.mult32(m, n)
+	def Hashcode.mult32(m, n)
 		return (m * n) & MASK_32
 	end
 
-	def Murmur3.rotl32(x, r)
+	def Hashcode.rotl32(x, r)
 		m = (1 << (32 - r)) - 1
 		return ((x & m) << r) | (x >> (32 - r))
 	end
 
-	def Murmur3.lshift32(x, s)
+	def Hashcode.lshift32(x, s)
 		return (x << s) & MASK_32
 	end
 
-	def Murmur3.fmix32(h)
+	def Hashcode.fmix32(h)
 		h ^= h >> 16
 		h = mult32(h, 0x85ebca6b)
 		h ^= h >> 13
