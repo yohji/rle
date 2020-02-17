@@ -36,13 +36,25 @@ class String
 		return r
 	end
 
-	def stat
+	def stat(chunk = 1)
 		stat = Hash.new
 
+		idx = 0
+		buf = String.new if chunk != 1
 		self.each_char do |ch|
-			k = ch.upcase
-			stat[k] = 0 if stat[k].nil?
-			stat[k] += 1
+
+			if chunk == 1
+				k = ch.upcase
+				stat[k] = 0 if stat[k].nil?
+				stat[k] += 1
+			else
+				buf << ch.upcase
+				if ((idx += 1) % chunk) == 0
+					stat[buf] = 0 if stat[buf].nil?
+					stat[buf] += 1
+					buf.clear
+				end
+			end
 		end
 
 		return stat.sort_by { |k, v| -v }
