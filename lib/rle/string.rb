@@ -35,4 +35,16 @@ class String
 
 		return r
 	end
+
+	def stat
+		stat = Hash.new
+
+		self.each_char do |ch|
+			k = ch.upcase
+			stat[k] = 0 if stat[k].nil?
+			stat[k] += 1
+		end
+
+		return stat.sort_by { |k, v| -v }
+	end
 end
