@@ -19,19 +19,19 @@
 
 module Cipher
 
-	CHAR_UPCASE = 65
-	CHAR_DOWNCASE = 97
+	CH_UP = 65
+	CH_DN = 97
 
 	def Cipher.rot_enc(msg, shift = 13)
-
 		res = String.new
+
 		msg.each_char do |ch|
 			n = ch.ord
 
-			if n >= CHAR_UPCASE and n < (CHAR_UPCASE + 26)
-				n = (((n - CHAR_UPCASE) + shift) % 26) + CHAR_UPCASE
-			elsif n >= CHAR_DOWNCASE and n < (CHAR_DOWNCASE + 26)
-				n = (((n - CHAR_DOWNCASE) + shift) % 26) + CHAR_DOWNCASE
+			if n.between? CH_UP, (CH_UP + 26)
+				n = (((n - CH_UP) + shift) % 26) + CH_UP
+			elsif n.between? CH_DN, (CH_DN + 26)
+				n = (((n - CH_DN) + shift) % 26) + CH_DN
 			end
 
 			res += n.chr(Encoding::UTF_8)
@@ -41,15 +41,61 @@ module Cipher
 	end
 
 	def Cipher.rot_dec(msg, shift = 13)
-
 		res = String.new
+
 		msg.each_char do |ch|
 			n = ch.ord
 
-			if n >= CHAR_UPCASE and n < (CHAR_UPCASE + 26)
-				n = (((n - CHAR_UPCASE) - shift) % 26) + CHAR_UPCASE
-			elsif n >= CHAR_DOWNCASE and n < (CHAR_DOWNCASE + 26)
-				n = (((n - CHAR_DOWNCASE) - shift) % 26) + CHAR_DOWNCASE
+			if n.between? CH_UP, (CH_UP + 26)
+				n = (((n - CH_UP) - shift) % 26) + CH_UP
+			elsif n.between? CH_DN, (CH_DN + 26)
+				n = (((n - CH_DN) - shift) % 26) + CH_DN
+			end
+
+			res += n.chr(Encoding::UTF_8)
+		end
+
+		return res
+	end
+
+	def Cipher.vigenere_enc(msg, key)
+		res = String.new
+		table = key.upcase.each_byte.map {|c| c.ord - CH_UP}
+
+		idx = -1;
+		msg.each_char do |ch|
+			n = ch.ord
+
+			if n.between? CH_UP, (CH_UP + 26)
+				k = table[(idx += 1) % table.length]
+				n = CH_UP + ((k + (n - CH_UP)) % 26)
+
+			elsif n.between? CH_DN, (CH_DN + 26)
+				k = table[(idx += 1) % table.length]
+				n = CH_DN + ((k + (n - CH_DN)) % 26)
+			end
+
+			res += n.chr(Encoding::UTF_8)
+		end
+
+		return res
+	end
+
+	def Cipher.vigenere_dec(msg, key)
+		res = String.new
+		table = key.upcase.each_byte.map {|c| c.ord - CH_UP}
+
+		idx = -1;
+		msg.each_char do |ch|
+			n = ch.ord
+
+			if n.between? CH_UP, (CH_UP + 26)
+				k = table[(idx += 1) % table.length]
+				n = CH_UP + (((n - CH_UP) - k) % 26)
+
+			elsif n.between? CH_DN, (CH_DN + 26)
+				k = table[(idx += 1) % table.length]
+				n = CH_DN + (((n - CH_DN) - k) % 26)
 			end
 
 			res += n.chr(Encoding::UTF_8)
@@ -59,10 +105,9 @@ module Cipher
 	end
 
 	def Cipher.xor_enc(msg, key)
-
 		res = String.new
-		bytes = msg.unpack("S*")
 
+		bytes = msg.unpack("S*")
 		bytes.each do |b| # 16bit
 			buffer = (b ^ key)
 			res += (buffer & 0xff).chr
@@ -73,10 +118,9 @@ module Cipher
 	end
 
 	def Cipher.xor_dec(msg, key)
-
 		res = String.new
-		bytes = msg.unpack("S*")
 
+		bytes = msg.unpack("S*")
 		bytes.each do |b| # 16bit
 			buffer = (b ^ key)
 			res += (buffer & 0xff).chr
