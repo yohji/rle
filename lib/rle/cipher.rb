@@ -1,21 +1,21 @@
-#
-#   Copyright (c) 2018 Marco Merli <yohji@marcomerli.net>
-#
-#   This program is free software; you can redistribute it and/or modify
-#   it under the terms of the GNU Lesser General Public License as published by
-#   the Free Software Foundation; either version 2 of the License, or
-#   (at your option) any later version.
-#
-#   This program is distributed in the hope that it will be useful,
-#   but WITHOUT ANY WARRANTY; without even the implied warranty of
-#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#   GNU Lesser General Public License for more details.
-#
-#   You should have received a copy of the GNU Lesser General Public License
-#   along with this program; if not, write to the Free Software Foundation,
-#   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-#   or see <http://www.gnu.org/licenses/>
-#
+#--
+#--   Copyright (c) 2018 Marco Merli <yohji@marcomerli.net>
+#--
+#--   This program is free software; you can redistribute it and/or modify
+#--   it under the terms of the GNU Lesser General Public License as published by
+#--   the Free Software Foundation; either version 2 of the License, or
+#--   (at your option) any later version.
+#--
+#--   This program is distributed in the hope that it will be useful,
+#--   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#--   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#--   GNU Lesser General Public License for more details.
+#--
+#--   You should have received a copy of the GNU Lesser General Public License
+#--   along with this program; if not, write to the Free Software Foundation,
+#--   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+#--   or see <http://www.gnu.org/licenses/>
+#--
 
 module Cipher
 
@@ -24,7 +24,6 @@ module Cipher
 
 	def Cipher.rot_enc(msg, shift = 13)
 		res = String.new
-
 		msg.each_char do |ch|
 			n = ch.ord
 
@@ -34,7 +33,7 @@ module Cipher
 				n = (((n - CH_DN) + shift) % 26) + CH_DN
 			end
 
-			res += n.chr(Encoding::UTF_8)
+			res += n.chr
 		end
 
 		return res
@@ -42,7 +41,6 @@ module Cipher
 
 	def Cipher.rot_dec(msg, shift = 13)
 		res = String.new
-
 		msg.each_char do |ch|
 			n = ch.ord
 
@@ -52,7 +50,7 @@ module Cipher
 				n = (((n - CH_DN) - shift) % 26) + CH_DN
 			end
 
-			res += n.chr(Encoding::UTF_8)
+			res += n.chr
 		end
 
 		return res
@@ -75,7 +73,7 @@ module Cipher
 				n = CH_DN + ((k + (n - CH_DN)) % 26)
 			end
 
-			res += n.chr(Encoding::UTF_8)
+			res += n.chr
 		end
 
 		return res
@@ -98,7 +96,7 @@ module Cipher
 				n = CH_DN + (((n - CH_DN) - k) % 26)
 			end
 
-			res += n.chr(Encoding::UTF_8)
+			res += n.chr
 		end
 
 		return res
