@@ -1,6 +1,6 @@
 # Ruby Language Extensions
 
-`rle` is a set of extensions of core classes of Ruby.
+`rle` is an extensions of core classes of Ruby and a set of various tools.
 
 ## Installation
 
@@ -13,7 +13,9 @@ $ sudo gem install ./rle-XXX.gem
 ## Usage
 
 ```ruby
-require 'rle'
+require 'rle' # load extensions of classes
+
+Rle.load_tools # load all tools
 ```
 
 ## Contributing

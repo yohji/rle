@@ -26,7 +26,7 @@ module Rle
 	require "rle/sys"
 	require "rle/version"
 
-	def Rle.load_extra
+	def Rle.load_tools
 		require "rle/cipher"
 		require "rle/geo"
 		require "rle/hash"
