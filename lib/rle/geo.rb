@@ -17,15 +17,17 @@
 #--   or see <http://www.gnu.org/licenses/>
 #--
 
-module Geo
+module Rle
+	module Geo
 
-	def bearing(from, to)
+		def bearing(from, to)
 
-		d = to.lonr - from.lonr
-		y = Math.sin(d) * Math.cos(to.latr)
-		x = Math.cos(from.latr) * Math.sin(to.latr) \
-			- Math.sin(from.latr) * Math.cos(to.latr) * Math.cos(d)
+			d = to.lonr - from.lonr
+			y = Math.sin(d) * Math.cos(to.latr)
+			x = Math.cos(from.latr) * Math.sin(to.latr) \
+				- Math.sin(from.latr) * Math.cos(to.latr) * Math.cos(d)
 
-		return ((Math.atan2(y, x) * (180 / Math::PI)) + 360) % 360
+			return ((Math.atan2(y, x) * (180 / Math::PI)) + 360) % 360
+		end
 	end
 end

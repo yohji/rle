@@ -19,9 +19,15 @@
 
 class Array
 
+	alias :len :length
+
 	def avg
 		return self.inject(0.0) {|sum, el| sum + el} / self.size
 	end
+end
+
+class Hash
+	alias :len :length
 end
 
 class MultiHash < Hash

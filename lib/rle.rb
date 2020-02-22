@@ -24,6 +24,7 @@ module Rle
 	require "rle/random"
 	require "rle/string"
 	require "rle/sys"
+	require "rle/type"
 	require "rle/version"
 
 	def Rle.load_tools
@@ -31,6 +32,5 @@ module Rle
 		require "rle/geo"
 		require "rle/hash"
 		require "rle/net"
-		require "rle/type"
 	end
 end

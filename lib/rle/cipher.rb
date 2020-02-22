@@ -17,114 +17,128 @@
 #--   or see <http://www.gnu.org/licenses/>
 #--
 
-module Cipher
+module Rle
+	module Cipher
 
-	CH_UP = 65
-	CH_DN = 97
+		CH_UP = 65
+		CH_DN = 97
 
-	def Cipher.rot_enc(msg, shift = 13)
-		res = String.new
-		msg.each_char do |ch|
-			n = ch.ord
+		def Cipher.rot_enc(msg, shift = 13)
+			res = String.new
+			msg.each_char do |ch|
+				n = ch.ord
 
-			if n.between? CH_UP, (CH_UP + 26)
-				n = (((n - CH_UP) + shift) % 26) + CH_UP
-			elsif n.between? CH_DN, (CH_DN + 26)
-				n = (((n - CH_DN) + shift) % 26) + CH_DN
+				if n.between? CH_UP, (CH_UP + 25)
+					n = (((n - CH_UP) + shift) % 26) + CH_UP
+				elsif n.between? CH_DN, (CH_DN + 25)
+					n = (((n - CH_DN) + shift) % 26) + CH_DN
+				end
+
+				res += n.chr
 			end
 
-			res += n.chr
+			return res
 		end
 
-		return res
-	end
+		def Cipher.rot_dec(msg, shift = 13)
+			res = String.new
+			msg.each_char do |ch|
+				n = ch.ord
 
-	def Cipher.rot_dec(msg, shift = 13)
-		res = String.new
-		msg.each_char do |ch|
-			n = ch.ord
+				if n.between? CH_UP, (CH_UP + 25)
+					n = (((n - CH_UP) - shift) % 26) + CH_UP
+				elsif n.between? CH_DN, (CH_DN + 25)
+					n = (((n - CH_DN) - shift) % 26) + CH_DN
+				end
 
-			if n.between? CH_UP, (CH_UP + 26)
-				n = (((n - CH_UP) - shift) % 26) + CH_UP
-			elsif n.between? CH_DN, (CH_DN + 26)
-				n = (((n - CH_DN) - shift) % 26) + CH_DN
+				res += n.chr
 			end
 
-			res += n.chr
+			return res
 		end
 
-		return res
-	end
+		def Cipher.vigenere_enc(msg, key)
+			res = String.new
+			table = key.upcase.each_byte.map {|c| c.ord - CH_UP}
 
-	def Cipher.vigenere_enc(msg, key)
-		res = String.new
-		table = key.upcase.each_byte.map {|c| c.ord - CH_UP}
+			idx = -1;
+			msg.each_char do |ch|
+				n = ch.ord
 
-		idx = -1;
-		msg.each_char do |ch|
-			n = ch.ord
+				if n.between? CH_UP, (CH_UP + 25)
+					k = table[(idx += 1) % table.length]
+					n = CH_UP + ((k + (n - CH_UP)) % 26)
 
-			if n.between? CH_UP, (CH_UP + 26)
-				k = table[(idx += 1) % table.length]
-				n = CH_UP + ((k + (n - CH_UP)) % 26)
+				elsif n.between? CH_DN, (CH_DN + 25)
+					k = table[(idx += 1) % table.length]
+					n = CH_DN + ((k + (n - CH_DN)) % 26)
+				end
 
-			elsif n.between? CH_DN, (CH_DN + 26)
-				k = table[(idx += 1) % table.length]
-				n = CH_DN + ((k + (n - CH_DN)) % 26)
+				res += n.chr
 			end
 
-			res += n.chr
+			return res
 		end
 
-		return res
-	end
+		def Cipher.vigenere_dec(msg, key)
+			res = String.new
+			table = key.upcase.each_byte.map {|c| c.ord - CH_UP}
 
-	def Cipher.vigenere_dec(msg, key)
-		res = String.new
-		table = key.upcase.each_byte.map {|c| c.ord - CH_UP}
+			idx = -1;
+			msg.each_char do |ch|
+				n = ch.ord
 
-		idx = -1;
-		msg.each_char do |ch|
-			n = ch.ord
+				if n.between? CH_UP, (CH_UP + 25)
+					k = table[(idx += 1) % table.length]
+					n = CH_UP + (((n - CH_UP) - k) % 26)
 
-			if n.between? CH_UP, (CH_UP + 26)
-				k = table[(idx += 1) % table.length]
-				n = CH_UP + (((n - CH_UP) - k) % 26)
+				elsif n.between? CH_DN, (CH_DN + 25)
+					k = table[(idx += 1) % table.length]
+					n = CH_DN + (((n - CH_DN) - k) % 26)
+				end
 
-			elsif n.between? CH_DN, (CH_DN + 26)
-				k = table[(idx += 1) % table.length]
-				n = CH_DN + (((n - CH_DN) - k) % 26)
+				res += n.chr
 			end
 
-			res += n.chr
+			return res
 		end
 
-		return res
-	end
+		def Cipher.xor_enc(msg, key)
+			raise "The maximum key size is 16 bits." if key > ((1 << 16) - 1)
+			res = String.new
 
-	def Cipher.xor_enc(msg, key)
-		res = String.new
+			bytes = msg.unpack("S*")
+			bytes.each do |b|
+				buffer = (b ^ key)
+				res += (buffer & 0xff).chr
+				res += (buffer >> 8).chr
+			end
 
-		bytes = msg.unpack("S*")
-		bytes.each do |b| # 16bit
-			buffer = (b ^ key)
-			res += (buffer & 0xff).chr
-			res += (buffer >> 8).chr
+			if msg.length % 2 != 0
+				res += (bytes.last & 0xff).chr
+			end
+
+			return res
 		end
 
-		return res
-	end
+		def Cipher.xor_dec(msg, key)
+			raise "The maximum key size is 16 bits." if key > ((1 << 16) - 1)
+			res = String.new
 
-	def Cipher.xor_dec(msg, key)
-		res = String.new
+			bytes = msg.unpack("S*")
+			bytes.each do |b|
+				buffer = (b ^ key)
+				res += (buffer & 0xff).chr
+				res += (buffer >> 8).chr
+			end
 
-		bytes = msg.unpack("S*")
-		bytes.each do |b| # 16bit
-			buffer = (b ^ key)
-			res += (buffer & 0xff).chr
-			res += (buffer >> 8).chr
+			if msg.length % 2 != 0
+				res += (bytes.last & 0xff).chr
+			end
+
+			return res
 		end
 
-		return res
+		private_constant :CH_UP, :CH_DN
 	end
 end

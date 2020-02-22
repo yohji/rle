@@ -19,27 +19,29 @@
 
 require 'net/http'
 
-module Web
+module Rle
+	module Web
 
-	def Web.http_get url
-		uri = URI(url)
+		def Web.http_get url
+			uri = URI(url)
 
-		res = Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http|
-			req = Net::HTTP::Get.new(uri)
-			yield req if block_given?
-			http.request(req)
+			res = Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http|
+				req = Net::HTTP::Get.new(uri)
+				yield req if block_given?
+				http.request(req)
+			end
+			return res
 		end
-		return res
-	end
 
-	def Web.http_post url
-		uri = URI(url)
+		def Web.http_post url
+			uri = URI(url)
 
-		res = Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http|
-			req = Net::HTTP::Post.new(uri)
-			yield req if block_given?
-			http.request(req)
+			res = Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http|
+				req = Net::HTTP::Post.new(uri)
+				yield req if block_given?
+				http.request(req)
+			end
+			return res
 		end
-		return res
 	end
 end
