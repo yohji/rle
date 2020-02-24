@@ -75,23 +75,6 @@ end
 
 class Float
 
-	def to_r
-		return "0" if self == 0
-
-		n = 0.0
-		while n < 1e4
-			n += 1
-			d = 0.0
-
-			begin
-				d += 1
-				return "#{n.to_i}/#{d.to_i}" if (n / d) == self
-			end until ((n / d) < self)
-		end
-
-		return "?/?"
-	end
-
 	def round_next(nearest)
 		return (self.round / nearest) * nearest;
 	end

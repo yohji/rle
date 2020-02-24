@@ -31,14 +31,22 @@ class CipherTest < Test::Unit::TestCase
 		end
 	end
 
+	def test_atbash
+		secret = Rle::Cipher.atbash(TEXT)
+		plain = Rle::Cipher.atbash(secret)
+
+		assert_equal(TEXT.size, plain.size)
+		assert_equal(TEXT, plain)
+	end
+
 	def test_xor
 		m = (1 << 16) - 1
 
 		10000.times do |i|
 			key = rand m
 
-			secret = Rle::Cipher.xor_enc(TEXT, key)
-			plain = Rle::Cipher.xor_dec(secret, key)
+			secret = Rle::Cipher.xor(TEXT, key)
+			plain = Rle::Cipher.xor(secret, key)
 
 			assert_equal(TEXT.size, plain.size)
 			assert_equal(TEXT, plain, "key: #{key}")

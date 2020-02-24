@@ -103,25 +103,24 @@ module Rle
 			return res
 		end
 
-		def Cipher.xor_enc(msg, key)
-			raise "The maximum key size is 16 bits." if key > ((1 << 16) - 1)
+		def Cipher.atbash(msg)
 			res = String.new
+			msg.each_char do |ch|
+				n = ch.ord
 
-			bytes = msg.unpack("S*")
-			bytes.each do |b|
-				buffer = (b ^ key)
-				res += (buffer & 0xff).chr
-				res += (buffer >> 8).chr
-			end
+				if n.between? CH_UP, (CH_UP + 25)
+					n = CH_UP + (CH_UP + 25) - n
+				elsif n.between? CH_DN, (CH_DN + 25)
+					n = CH_DN + (CH_DN + 25) - n
+				end
 
-			if msg.length % 2 != 0
-				res += (bytes.last & 0xff).chr
+				res += n.chr
 			end
 
 			return res
 		end
 
-		def Cipher.xor_dec(msg, key)
+		def Cipher.xor(msg, key)
 			raise "The maximum key size is 16 bits." if key > ((1 << 16) - 1)
 			res = String.new
 
