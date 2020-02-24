@@ -32,7 +32,10 @@ class CipherTest < Test::Unit::TestCase
 	end
 
 	def test_xor
-		(0 .. ((1 << 16) - 1)).each do |key|
+		m = (1 << 16) - 1
+
+		10000.times do |i|
+			key = rand m
 
 			secret = Rle::Cipher.xor_enc(TEXT, key)
 			plain = Rle::Cipher.xor_dec(secret, key)

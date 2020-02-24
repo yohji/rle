@@ -25,6 +25,10 @@ class String
 		return self =~ /-?\d+([\.,]\d+)?/
 	end
 
+	def blank?
+		self.strip.empty?
+	end
+
 	def to_b
 		r = 0
 
