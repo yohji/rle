@@ -75,6 +75,10 @@ end
 
 class Float
 
+	def to_h
+		return self.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse
+	end
+
 	def round_next(nearest)
 		return (self.round / nearest) * nearest;
 	end

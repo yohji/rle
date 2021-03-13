@@ -24,6 +24,19 @@ class Array
 	def avg
 		return self.inject(0.0) {|sum, el| sum + el} / self.size
 	end
+
+	def wavg
+		return 0 if self.length == 0
+
+		v = 0
+		w = 0
+		self.each do |p|
+			v += (p[0] * p[1]).to_f
+			w += p[1]
+		end
+
+		return w != 0 ? v / w : 0
+	end
 end
 
 class Hash
